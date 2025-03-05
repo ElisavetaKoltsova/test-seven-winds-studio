@@ -1,0 +1,87 @@
+.HeaderTop {
+  min-height: 40px;
+  display: flex;
+  padding: 0 20px;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid #414144;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+
+  &>li {
+    min-height: 40px;
+  }
+}
+
+.button {
+  display: flex;
+  min-height: 100%;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  color: #A1A1AA;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  align-items: center;
+  padding: 0 5px;
+
+  &:hover {
+    background-color: #333;
+  }
+}
+
+.buttonActive {
+  border-bottom: 2px solid #fff;
+  color: #fff;
+  padding: 2px 5px 0 5px;
+}
+
+.HeaderBottom {
+  min-height: 44px;
+  border-bottom: 1px solid #414144;
+  display: flex;
+}
+
+.left {
+  width: 240px;
+  border-right: 1px solid #414144;
+  display: flex;
+  padding: 5px 10px 5px 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  color: #A1A1AA;
+}
+
+.helper {
+  color: #A1A1AA;
+  font-size: 10px;
+}
+
+.arrowDownButton {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 3px;
+
+  &:hover {
+    background-color: #333;
+  }
+}
+
+.right {
+  font-size: 18px;
+  padding: 5px 15px;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid #414144;
+
+}
