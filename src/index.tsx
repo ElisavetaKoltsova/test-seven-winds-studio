@@ -4,21 +4,18 @@ import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import App from './components/app/app';
 import { store } from './components/store';
-import { createEntityAction, fetchTreeRowsAction } from './components/store/api-actions';
+import { fetchTreeRowsAction } from './components/store/api-actions';
+import { Provider } from 'react-redux';
 
-// store.dispatch(fetchTreeRowsAction());
-store.dispatch(createEntityAction());
+store.dispatch(fetchTreeRowsAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>
+  </Provider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

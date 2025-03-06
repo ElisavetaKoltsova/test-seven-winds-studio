@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import styles from './App.style.scss';
+import styles from './App.module.scss';
 import Header from "../header/header";
 import { LeftMenu } from "../left-menu/left-menu";
 import MainSection from "../main-section/main-section";

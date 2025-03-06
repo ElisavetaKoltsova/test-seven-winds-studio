@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import classNames from 'classnames';
-import styles from './LeftMenu.style.scss';
+import styles from './LeftMenu.module.scss';
 import { LeftMenuItemIcon } from '../icons/icons';
 
 interface MenuItem {

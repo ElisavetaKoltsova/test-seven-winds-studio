@@ -1,13 +1,34 @@
 import classNames from "classnames";
 import { JSX, useState } from "react";
-import styles from './List.style.scss';
+import styles from './List.module.scss';
 import { ListItemIcon, TrashItemIcon } from "../icons/icons";
+import { TreeRow } from "../../types/tree-rows";
+import ListItemAdd from "./list-item-add";
+import ListItemView from "./list-item-view";
+import { useAppDispatch } from "../../hooks";
+import { deleteTreeRowAction } from "../store/api-actions";
 
-export default function ListItem(): JSX.Element {
+type ListItemProps = {
+  listItem: TreeRow;
+  creatingLevelStatus: boolean;
+  editingLevelStatus?: boolean;
+}
+
+export default function ListItem({listItem, creatingLevelStatus, editingLevelStatus}: ListItemProps): JSX.Element {
+  const [deleteViewStatus, setDeleteViewStatus] = useState(false);
   const [editStatus, setEditStatus] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleListIconItemHover = () => {
+    setDeleteViewStatus(true);
+  };
+
+  const handleListItemEditDoubleClick = () => {
     setEditStatus(true);
+  };
+
+  const handleListItemDeleteButtonClick = () => {
+    dispatch(deleteTreeRowAction(listItem.id));
   };
 
   return (
@@ -19,9 +40,10 @@ export default function ListItem(): JSX.Element {
             >
               <ListItemIcon />
             </button>
-            {editStatus && (
+            {deleteViewStatus && (
               <button
                 title={'Удалить элемент'}
+                onClick={handleListItemDeleteButtonClick}
               >
                 <TrashItemIcon />
               </button>
@@ -29,12 +51,8 @@ export default function ListItem(): JSX.Element {
           </div>
       </td>
 
-      <td>Название №1</td>
-      <td>100 000</td>
-      <td>20 000</td>
-      <td>40 000</td>
-      <td>200 000</td>
-
+      {!editStatus ? <ListItemView listItem={listItem} onDoubleClick={handleListItemEditDoubleClick} /> : ''}
+      {/* {editStatus ? <ListItemAdd editStatus={editStatus} /> : ''} */}
     </tr>
   );
 }

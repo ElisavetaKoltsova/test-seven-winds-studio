@@ -1,4 +1,4 @@
-export type TreeRows = {
+export type TreeRow = {
   equipmentCosts: number;
   estimatedProfit: number;
   id: number;
@@ -7,8 +7,10 @@ export type TreeRows = {
   materials: number;
   mimExploitation: number;
   overheads: number;
-  rowName: number;
+  rowName: string;
   salary: number;
   supportCosts: number;
   total: number;
+  child: TreeRow[];
 };
+   

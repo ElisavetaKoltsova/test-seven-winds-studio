@@ -1,7 +1,7 @@
 import axios, { AxiosResponse, AxiosInstance, AxiosError } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
-const BACKEND_URL = 'http://185.244.172.108:8081/';
+const BACKEND_URL = 'http://185.244.172.108:8081/v1/outlay-rows/entity/148635/';
 const REQUEST_TIMEOUT = 5000;
 
 type DetailMessageType = {
