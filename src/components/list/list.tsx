@@ -55,15 +55,14 @@ export default function List(): JSX.Element {
         </thead>
         <tbody>
           {
-            treeRows && treeRows.map((treeRow) => <ListItem key={treeRow.id} listItem={treeRow} />)
+            treeRows && treeRows.map((treeRow, index) => <ListItem key={treeRow.id} index={index} level={0} listItem={treeRow} />)
           }
 
-          
           {
             creatingLevelStatus ?
               (<tr className={classNames(styles.tr)}>
                 <td className={styles.levelTd}>
-                  <LineConnections>
+                  <LineConnections lastElement={false}>
                   <div className={styles.iconsWrapper} onMouseEnter={handleDeleteLevelIconHover}>
                     <button
                       title={'Создать дочерний элемент'}

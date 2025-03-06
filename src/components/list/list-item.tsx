@@ -5,19 +5,24 @@ import { ListItemIcon, TrashItemIcon } from "../icons/icons";
 import { TreeRow } from "../../types/tree-rows";
 import ListItemAdd from "./list-item-add";
 import ListItemView from "./list-item-view";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { deleteTreeRowAction } from "../store/api-actions";
 import LineConnections from "../icons/line-connections";
+import { getTreeRows } from "../store/tree-row-data/selectors";
 
 type ListItemProps = {
+  index: number;
   listItem: TreeRow;
+  childStatus?: boolean;
+  level: number;
 }
 
-export default function ListItem({listItem}: ListItemProps): JSX.Element {
+export default function ListItem({index, listItem, level, childStatus}: ListItemProps): JSX.Element {
   const [deleteViewStatus, setDeleteViewStatus] = useState(false);
   const [editStatus, setEditStatus] = useState(false);
   const [addStatus, setAddStatus] = useState(false);
   const dispatch = useAppDispatch();
+  const treeRows = useAppSelector(getTreeRows);
 
   const handleListIconItemHover = () => {
     setDeleteViewStatus(true);
@@ -43,8 +48,12 @@ export default function ListItem({listItem}: ListItemProps): JSX.Element {
   return (
     <>
   <tr className={classNames(styles.tr)}>
-    <td className={styles.levelTd}>
-      <LineConnections>
+    <td className={styles.levelTd} style={{ '--level': `${level}` } as React.CSSProperties}>
+      {/* {
+        childStatus ? <span>&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;</span> : ''
+      } */}
+      <span className={styles.levelIndent}></span>
+      <LineConnections lastElement={index === treeRows.length - 1}>
         <div className={styles.iconsWrapper} onMouseEnter={handleListIconItemHover}>
           <button
             title={'Создать дочерний элемент'}
@@ -73,7 +82,7 @@ export default function ListItem({listItem}: ListItemProps): JSX.Element {
     (
       <tr className={classNames(styles.tr)}>
         <td className={styles.levelTd}>
-          <LineConnections>
+          <LineConnections lastElement={index === treeRows.length - 1}>
           <div className={styles.iconsWrapper}>
             <button
               title={'Создать дочерний элемент'}
@@ -98,8 +107,7 @@ export default function ListItem({listItem}: ListItemProps): JSX.Element {
   {
       listItem.child.length ?
       (<>
-        
-        {listItem.child.map((child) => <ListItem key={child.id} listItem={child} />)}
+        {listItem.child.map((child, index) => <ListItem key={child.id} index={index} listItem={child} level={level + 1} childStatus={true} />)}
       </>)
       : ''
     }
