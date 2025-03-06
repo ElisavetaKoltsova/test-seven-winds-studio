@@ -2,33 +2,19 @@ import { useState } from "react";
 import { JSX } from "react";
 import styles from "./ListItemAdd.module.scss";
 import { TreeRow } from "../../types/tree-rows";
-import { postTreeRowAction } from "../store/api-actions";
+import { postChildTreeRowAction, postTreeRowAction, updateTreeRowAction } from "../store/api-actions";
 import { useAppDispatch } from "../../hooks";
 
 type ListItemAddProps = {
   editStatus?: boolean;
+  id?: number;
+  parentId?: number;
   onSubmit: () => void;
 };
 
 type FormData = Pick<TreeRow, "rowName" | "salary" | "equipmentCosts" | "estimatedProfit" | "overheads">;
 
-const defaultFormData: TreeRow = {
-  rowName: "",
-  salary: 0,
-  equipmentCosts: 0,
-  estimatedProfit: 0,
-  mainCosts: 0,
-  materials: 0,
-  overheads: 0,
-  mimExploitation: 0,
-  machineOperatorSalary: 0,
-  supportCosts: 0,
-  total: 0,
-  id: Date.now(),
-  child: [],
-};
-
-export default function ListItemAdd({ editStatus, onSubmit }: ListItemAddProps): JSX.Element {
+export default function ListItemAdd({ editStatus, id, parentId, onSubmit }: ListItemAddProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const [formData, setFormData] = useState<Partial<FormData>>({
@@ -38,6 +24,22 @@ export default function ListItemAdd({ editStatus, onSubmit }: ListItemAddProps):
     estimatedProfit: 0,
     overheads: 0,
   });
+
+  const defaultFormData: TreeRow = {
+    rowName: "",
+    salary: 0,
+    equipmentCosts: 0,
+    estimatedProfit: 0,
+    mainCosts: 0,
+    materials: 0,
+    overheads: 0,
+    mimExploitation: 0,
+    machineOperatorSalary: 0,
+    supportCosts: 0,
+    total: 0,
+    id: id ? id : Date.now(),
+    child: [],
+  };
 
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
@@ -62,7 +64,17 @@ export default function ListItemAdd({ editStatus, onSubmit }: ListItemAddProps):
       e.preventDefault();
       const hasErrors = Object.values(errors).some((error) => error);
       if (!hasErrors) {
-        dispatch(postTreeRowAction({ ...defaultFormData, ...formData }));
+        if (parentId) {
+          dispatch(postChildTreeRowAction({...defaultFormData, ...formData, parentId}))
+        } else {
+          if (editStatus) {
+            dispatch(updateTreeRowAction({...defaultFormData, ...formData}));
+          } else {
+            dispatch(postTreeRowAction({...defaultFormData, ...formData}));
+          }
+          
+        }
+        
         onSubmit();
       }
     }

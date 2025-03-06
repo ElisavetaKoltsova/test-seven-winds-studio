@@ -11,13 +11,12 @@ import LineConnections from "../icons/line-connections";
 
 type ListItemProps = {
   listItem: TreeRow;
-  creatingLevelStatus: boolean;
-  editingLevelStatus?: boolean;
 }
 
-export default function ListItem({listItem, creatingLevelStatus, editingLevelStatus}: ListItemProps): JSX.Element {
+export default function ListItem({listItem}: ListItemProps): JSX.Element {
   const [deleteViewStatus, setDeleteViewStatus] = useState(false);
   const [editStatus, setEditStatus] = useState(false);
+  const [addStatus, setAddStatus] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleListIconItemHover = () => {
@@ -32,30 +31,79 @@ export default function ListItem({listItem, creatingLevelStatus, editingLevelSta
     dispatch(deleteTreeRowAction(listItem.id));
   };
 
+  const handleAddLevelButtonClick = () => {
+    setAddStatus(true);
+  };
+
+  const handleAddLevelButtonSubmit = () => {
+    setAddStatus(false);
+    setEditStatus(false);
+  };
+
   return (
-    <tr className={classNames(styles.tr)}>
-      <td className={styles.levelTd}>
-        <LineConnections>
-          <div className={styles.iconsWrapper} onMouseEnter={handleListIconItemHover}>
+    <>
+  <tr className={classNames(styles.tr)}>
+    <td className={styles.levelTd}>
+      <LineConnections>
+        <div className={styles.iconsWrapper} onMouseEnter={handleListIconItemHover}>
+          <button
+            title={'Создать дочерний элемент'}
+            onClick={handleAddLevelButtonClick}
+          >
+            <ListItemIcon />
+          </button>
+          {deleteViewStatus && (
+            <button
+              title={'Удалить элемент'}
+              onClick={handleListItemDeleteButtonClick}
+            >
+              <TrashItemIcon />
+            </button>
+          )}
+        </div>
+      </LineConnections>
+    </td>
+
+    {!editStatus ? <ListItemView listItem={listItem} onDoubleClick={handleListItemEditDoubleClick} /> : ''}
+    {editStatus ? <ListItemAdd editStatus={editStatus} id={listItem.id} onSubmit={handleAddLevelButtonSubmit} /> : ''}
+    
+  </tr>
+  {
+    addStatus ?
+    (
+      <tr className={classNames(styles.tr)}>
+        <td className={styles.levelTd}>
+          <LineConnections>
+          <div className={styles.iconsWrapper}>
             <button
               title={'Создать дочерний элемент'}
             >
               <ListItemIcon />
             </button>
-            {deleteViewStatus && (
+            {/* {deleteStatus && (
               <button
                 title={'Удалить элемент'}
-                onClick={handleListItemDeleteButtonClick}
+                onClick={handleDeleteLevelButtonClick}
               >
                 <TrashItemIcon />
               </button>
-            )}
+            )} */}
           </div>
-        </LineConnections>
-      </td>
-
-      {!editStatus ? <ListItemView listItem={listItem} onDoubleClick={handleListItemEditDoubleClick} /> : ''}
-      {/* {editStatus ? <ListItemAdd editStatus={editStatus} /> : ''} */}
-    </tr>
+          </LineConnections>
+        </td>
+        <ListItemAdd onSubmit={handleAddLevelButtonSubmit} parentId={listItem.id} />
+      </tr>
+    ) : ''
+  }
+  {
+      listItem.child.length ?
+      (<>
+        
+        {listItem.child.map((child) => <ListItem key={child.id} listItem={child} />)}
+      </>)
+      : ''
+    }
+  </>
+    
   );
 }

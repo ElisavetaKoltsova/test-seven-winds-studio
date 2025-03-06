@@ -30,7 +30,6 @@ export default function List(): JSX.Element {
     setCreatingLevelStatus(false);
   };
 
-  console.log(treeRows)
   return (
     <div className={styles.ListWrapper}>
       <table className={styles.List}>
@@ -56,7 +55,7 @@ export default function List(): JSX.Element {
         </thead>
         <tbody>
           {
-            treeRows && treeRows.map((treeRow) => <ListItem key={treeRow.id} listItem={treeRow} creatingLevelStatus={creatingLevelStatus} />)
+            treeRows && treeRows.map((treeRow) => <ListItem key={treeRow.id} listItem={treeRow} />)
           }
 
           

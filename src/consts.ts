@@ -4,7 +4,8 @@ export enum APIRoute {
   TreeRows = '/row/list',
   CreateTreeRow = '/row/create',
   Row = '/row',
-  Delete = '/delete'
+  Delete = '/delete',
+  Update = '/update'
 }
 
 export enum NameSpace {

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TreeRowProcess } from "../../../types/state";
 import { NameSpace } from "../../../consts";
-import { deleteTreeRowAction, fetchTreeRowsAction, postTreeRowAction } from "../api-actions";
+import { deleteTreeRowAction, fetchTreeRowsAction, postChildTreeRowAction, postTreeRowAction, updateTreeRowAction } from "../api-actions";
 
 const initialState: TreeRowProcess = {
   treeRows: [],
@@ -25,11 +25,15 @@ export const treeRowData = createSlice({
         state.isTreeRowsDataLoading = false;
       })
       .addCase(postTreeRowAction.fulfilled, (state, action) => {
-        state.isTreeRowsDataLoading = false;
         state.treeRows = action.payload;
       })
       .addCase(deleteTreeRowAction.fulfilled, (state, action) => {
-        state.isTreeRowsDataLoading = false;
+        state.treeRows = action.payload;
+      })
+      .addCase(postChildTreeRowAction.fulfilled, (state, action) => {
+        state.treeRows = action.payload;
+      })
+      .addCase(updateTreeRowAction.fulfilled, (state, action) => {
         state.treeRows = action.payload;
       });
   }
