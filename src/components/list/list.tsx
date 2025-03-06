@@ -6,6 +6,7 @@ import { useAppSelector } from "../../hooks";
 import { getTreeRows } from "../store/tree-row-data/selectors";
 import ListItemAdd from "./list-item-add";
 import classNames from "classnames";
+import LineConnections from "../icons/line-connections";
 
 export default function List(): JSX.Element {
   const [creatingLevelStatus, setCreatingLevelStatus] = useState(false);
@@ -63,6 +64,7 @@ export default function List(): JSX.Element {
             creatingLevelStatus ?
               (<tr className={classNames(styles.tr)}>
                 <td className={styles.levelTd}>
+                  <LineConnections>
                   <div className={styles.iconsWrapper} onMouseEnter={handleDeleteLevelIconHover}>
                     <button
                       title={'Создать дочерний элемент'}
@@ -78,6 +80,7 @@ export default function List(): JSX.Element {
                       </button>
                     )}
                   </div>
+                  </LineConnections>
                 </td>
                 <ListItemAdd onSubmit={handleCreateLevelButtonSubmit} />
               </tr>) : ''

@@ -7,6 +7,7 @@ import ListItemAdd from "./list-item-add";
 import ListItemView from "./list-item-view";
 import { useAppDispatch } from "../../hooks";
 import { deleteTreeRowAction } from "../store/api-actions";
+import LineConnections from "../icons/line-connections";
 
 type ListItemProps = {
   listItem: TreeRow;
@@ -34,6 +35,7 @@ export default function ListItem({listItem, creatingLevelStatus, editingLevelSta
   return (
     <tr className={classNames(styles.tr)}>
       <td className={styles.levelTd}>
+        <LineConnections>
           <div className={styles.iconsWrapper} onMouseEnter={handleListIconItemHover}>
             <button
               title={'Создать дочерний элемент'}
@@ -49,6 +51,7 @@ export default function ListItem({listItem, creatingLevelStatus, editingLevelSta
               </button>
             )}
           </div>
+        </LineConnections>
       </td>
 
       {!editStatus ? <ListItemView listItem={listItem} onDoubleClick={handleListItemEditDoubleClick} /> : ''}
