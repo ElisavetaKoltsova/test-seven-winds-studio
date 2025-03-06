@@ -29,7 +29,7 @@ export default function List(): JSX.Element {
   const handleDeleteLevelButtonClick = () => {
     setCreatingLevelStatus(false);
   };
-
+  
   return (
     <div className={styles.ListWrapper}>
       <table className={styles.List}>
@@ -57,6 +57,29 @@ export default function List(): JSX.Element {
           {
             treeRows && treeRows.map((treeRow, index) => <ListItem key={treeRow.id} index={index} level={0} listItem={treeRow} />)
           }
+
+          { treeRows.length === 0 ? (<tr className={classNames(styles.tr)}>
+                <td className={styles.levelTd}>
+                  <LineConnections lastElement={false}>
+                  <div className={styles.iconsWrapper} onMouseEnter={handleDeleteLevelIconHover}>
+                    <button
+                      title={'Создать дочерний элемент'}
+                    >
+                      <ListItemIcon />
+                    </button>
+                    {deleteStatus && (
+                      <button
+                        title={'Удалить элемент'}
+                        onClick={handleDeleteLevelButtonClick}
+                      >
+                        <TrashItemIcon />
+                      </button>
+                    )}
+                  </div>
+                  </LineConnections>
+                </td>
+                <ListItemAdd onSubmit={handleCreateLevelButtonSubmit} />
+              </tr>) : ''}
 
           {
             creatingLevelStatus ?
