@@ -1,6 +1,6 @@
 import { JSX, useState } from "react";
 import { HeaderBottomArrowDownIcon, HeaderTopBackIcon, HeaderTopGridIcon } from "../icons/icons";
-import styles from './Header.module.scss';
+import styles from './Header.style.scss';
 import classNames from "classnames";
 
 interface MenuItem {

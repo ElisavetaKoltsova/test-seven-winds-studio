@@ -1,6 +1,6 @@
 import { JSX } from "react";
 import { ListItemIcon } from "../icons/icons";
-import styles from './List.module.scss';
+import styles from './List.style.scss';
 import ListItem from "./list-item";
 
 export default function List(): JSX.Element {

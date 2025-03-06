@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { JSX, useState } from "react";
-import styles from './List.module.scss';
+import styles from './List.style.scss';
 import { ListItemIcon, TrashItemIcon } from "../icons/icons";
 
 export default function ListItem(): JSX.Element {
@@ -28,6 +28,7 @@ export default function ListItem(): JSX.Element {
             )}
           </div>
       </td>
+
       <td>Название №1</td>
       <td>100 000</td>
       <td>20 000</td>
